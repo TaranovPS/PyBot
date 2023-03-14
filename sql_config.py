@@ -19,3 +19,4 @@ try:
     cursor = connection.cursor()
 except:
     print('С подключением что-то не так!')
+

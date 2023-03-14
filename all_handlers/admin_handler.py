@@ -11,15 +11,16 @@ async def check_admin(message:types.Message):
         await AdminState.admin_check.set()
         await bot.send_message(message.from_user.id, 'Докажи! Введи секретный шифр!')
     else:
-        await bot.send_message(message.from_user.id, 'Ты и так Админ!', reply_markup=basic_keyboards.admin_kb)
+        await bot.send_message(message.from_user.id, 'Капитан, у вас деменция! Вы и так капитан, выше некуда!', reply_markup=basic_keyboards.admin_kb)
 
 
 async def new_admin_check(message:types.Message, state=FSMContext):
     if message.text == bot_config.admin_password:
-        await bot.send_message(message.from_user.id, 'Хорошо, допустим. А как нам называть тебя?')
+        await bot.send_message(message.from_user.id, 'Хорошо. Как вас будет звать команда?')
         await AdminState.next()
     else:
-        await bot.send_message(message.from_user.id, 'Иди обманывай в другое место, кыш на стартовое меню!', reply_markup=basic_keyboards.start_kb)
+        await bot.send_message(message.from_user.id, 'Кажется, капитан, на кухне скопилось много посуды, соизволите помыть?',
+                               reply_markup=basic_keyboards.start_kb)
         await state.finish()
 
 
@@ -34,14 +35,14 @@ async def change_admin_role(message: types.Message):
     try:
         del bot_config.admin_users[message.from_user.id]
         await bot.send_message(message.from_user.id,
-                               'Хочешь сменить свою роль? Хорошо! Я удалил тебя из Админов, пройди регистрацию заново!',
+                               'Хочешь мыть посуду как эти береговые крысы? Хорошо!',
                                reply_markup=basic_keyboards.start_kb)
     except:
-        await bot.send_message(message.from_user.id, 'Тебя нет в списке Админов', reply_markup=basic_keyboards.start_kb)
+        await bot.send_message(message.from_user.id, 'Ты и так палубная крыса!', reply_markup=basic_keyboards.start_kb)
 
 
 def register_admin_handlers(dp):
-    dp.register_message_handler(check_admin, lambda message: message.text == 'Я админ!', state=None)
+    dp.register_message_handler(check_admin, lambda message: message.text == 'Я Капитан!', state=None)
     dp.register_message_handler(new_admin_check, state=AdminState.admin_check)
     dp.register_message_handler(create_new_admin, state=AdminState.admin_name)
-    dp.register_message_handler(change_admin_role, lambda message: message.text == 'Я теперь юзер!')
+    dp.register_message_handler(change_admin_role, lambda message: message.text == 'Меня понизили!')
