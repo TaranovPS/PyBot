@@ -41,8 +41,14 @@ async def change_admin_role(message: types.Message):
         await bot.send_message(message.from_user.id, 'Ты и так палубная крыса!', reply_markup=basic_keyboards.start_kb)
 
 
+async def show_result(message: types.Message):
+    bot.send_message(message.from_user.id, 'Твоя команда сделала сегодня что то', reply_markup=basic_keyboards.admin_kb)
+
+
 def register_admin_handlers(dp):
     dp.register_message_handler(check_admin, lambda message: message.text == 'Я Капитан!', state=None)
     dp.register_message_handler(new_admin_check, state=AdminState.admin_check)
     dp.register_message_handler(create_new_admin, state=AdminState.admin_name)
     dp.register_message_handler(change_admin_role, lambda message: message.text == 'Меня понизили!')
+    dp.register_message_handler(show_result, lambda message: message.text == 'Показать результат команды!')
+
