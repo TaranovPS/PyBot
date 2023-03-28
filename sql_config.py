@@ -35,16 +35,8 @@ async def sql_load_data_to_result(id, name, amount_money, amount_heads, amount_s
 
 async def check_if_user(id: int) -> bool:
     if cursor.execute(f'select * from users where id = {id}'):
-        await print('С подключением что-то не так!')
-        await print('С подключением что-то не так!')
-        await print('С подключением что-то не так!')
-        await print('С подключением что-то не так!')
-        await print('С подключением что-то не так!')
-        await print('С подключением что-то не так!')
-        await print('С подключением что-то не так!')
-        await print('С подключением что-то не так!')
-        await print('С подключением что-то не так!')
-    return True
+        return True
+    return False
 
 
 async def check_if_admin(id: int) -> bool:
